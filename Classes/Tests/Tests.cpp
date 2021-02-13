@@ -8,7 +8,7 @@ Tests::Tests()
 
 }
 
-void Tests::doTests(int nBits, int M)
+void Tests::doTests(int B, int M)
 {
-    cout << nBits + M;
+    cout << B + M;
 }

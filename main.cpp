@@ -4,7 +4,7 @@
 
 
 using namespace std;
-void menuAtividade(int M, int nBits)
+void menuAtividade(int M, int B)
 {
     cout << "----------------------------------------------------" << endl;
     cout << "--------------Atividade de Hashing ED2--------------" << endl;
@@ -13,19 +13,19 @@ void menuAtividade(int M, int nBits)
     cout << "Digite o tamanho dos baldes: ";
     cin >> M;
     cout << "Digite o numero de Bits: ";
-    cin >> nBits;
+    cin >> B;
     cout << "----------------------------------------------------" << endl;
     cout << "------------Numeros digitados com sucesso-----------" << endl;
     cout << "----------------------------------------------------" << endl;
 
     Tests test;
-    test.doTests(nBits, M);
+    test.doTests(B, M);
 }
 int main(){
     int M;
-    int nBits;
+    int B;
 
-    menuAtividade(M,nBits);
+    menuAtividade(M,B);
     
-
+    return 0;
 }

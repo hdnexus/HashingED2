@@ -10,7 +10,7 @@ class Tests
      
     public:
      Tests();
-     void doTests(int nBits, int M);
+     void doTests(int B, int M);
      void firstTest();
      void secondTest();
      void printStatistics();

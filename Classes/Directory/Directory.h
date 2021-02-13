@@ -15,14 +15,15 @@ private:
     int nBuckets;
     vector<Bucket*> Buckets;
 
-    void bucketDivider();
+    
 
 
 public:
     Directory();
     ~Directory();
 
-    void Duplicate();
+    void bucketDivider();
+    void duplicateDirectory();
     void Insert();
     string binaryConverter();
     bool Search();
