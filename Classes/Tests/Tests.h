@@ -6,14 +6,13 @@ using namespace std;
 
 class Tests
 {
-    private:
-     
-    public:
-     Tests();
-     void doTests(int B, int M);
-     void firstTest();
-     void secondTest();
-     void printStatistics();
+private:
+public:
+    Tests();
+    void doTests(int B, int M);
+    void firstTest();
+    void secondTest();
+    void printStatistics();
 };
 
 #endif

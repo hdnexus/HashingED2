@@ -13,7 +13,7 @@ private:
     string *vector;
 
 public:
-    Bucket(int M);
+    Bucket(int M, int depth);
     ~Bucket();
 
     string getBucket();

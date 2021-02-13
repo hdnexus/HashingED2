@@ -5,7 +5,6 @@
 using namespace std;
 Tests::Tests()
 {
-
 }
 
 void Tests::doTests(int B, int M)

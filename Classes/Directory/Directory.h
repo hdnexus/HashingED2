@@ -8,25 +8,22 @@ using namespace std;
 
 class Directory
 {
-private: 
+private:
     int nKeys;
     int depth;
     int bucketSize;
     int nBuckets;
-    vector<Bucket*> Buckets;
-
-    
-
+    vector<Bucket *> Buckets;
 
 public:
-    Directory();
+    Directory(int M, int B);
     ~Directory();
 
     void bucketDivider();
     void duplicateDirectory();
-    void Insert();
+    void Insert(int i);
     string binaryConverter();
-    bool Search();
+    bool Search(int i);
     void Remove();
 };
 
