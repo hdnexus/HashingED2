@@ -1,4 +1,4 @@
-#include "./Diretorio.h"
+#include "./Directory.h"
 
 #include <iostream>
 
