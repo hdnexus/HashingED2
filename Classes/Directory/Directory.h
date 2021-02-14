@@ -14,17 +14,19 @@ private:
     int bits;
     int bucketSize;
     int nBuckets;
+    int bucketsCounter;
+    int keysCounter;
     vector<Bucket *> Buckets;
 
 public:
     Directory(int M, int B);
     ~Directory();
     Bucket getBucket(int n);
-    void bucketDivider();
+    void bucketDivider(string key);
     void duplicateDirectory();
-    void Insert(int i);
-    int binaryHash(long long int number, string key);
-    string intHash(string binary, int n);
+    void Insert(string key);
+    int intHash(int number, string key);
+    string binaryHash(int n);
     bool Search(string i);
     void Remove();
 };

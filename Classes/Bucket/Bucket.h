@@ -15,7 +15,6 @@ private:
 public:
     Bucket(int M);
     ~Bucket();
-
     int getUsedSize();
     void setUsedSize();
     int getLocalDepth();
@@ -26,6 +25,7 @@ public:
     void clearBucket();
     bool Insert(string pseudoKey);
     string getPseudoKey(int n);
+    void setPseudoKey(string key);
 };
 
 #endif

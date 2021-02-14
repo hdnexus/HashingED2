@@ -82,3 +82,8 @@ string Bucket::getPseudoKey(int n)
 {
   return this->pseudoKeys[n];
 }
+
+void Bucket::setPseudoKey(string n)
+{
+  this->pseudoKeys.push_back(n);
+}

@@ -6,6 +6,9 @@
         "xstring": "cpp",
         "iostream": "cpp",
         "cmath": "cpp",
-        "unordered_map": "cpp"
+        "unordered_map": "cpp",
+        "random": "cpp",
+        "deque": "cpp",
+        "sstream": "cpp"
     }
 }
