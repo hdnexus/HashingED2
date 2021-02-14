@@ -9,6 +9,7 @@ class Tests
 private:
 public:
     Tests();
+    ~Tests();
     void doTests(int B, int M);
     void firstTest();
     void secondTest();

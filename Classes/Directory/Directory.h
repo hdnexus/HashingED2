@@ -10,7 +10,8 @@ class Directory
 {
 private:
     int nKeys;
-    int depth;
+    int globalDepth;
+    int bits;
     int bucketSize;
     int nBuckets;
     vector<Bucket *> Buckets;
@@ -18,12 +19,13 @@ private:
 public:
     Directory(int M, int B);
     ~Directory();
-
+    Bucket getBucket(int n);
     void bucketDivider();
     void duplicateDirectory();
     void Insert(int i);
-    string binaryConverter();
-    bool Search(int i);
+    int binaryHash(long long int number, string key);
+    string intHash(string binary, int n);
+    bool Search(string i);
     void Remove();
 };
 

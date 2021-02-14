@@ -7,7 +7,11 @@ Tests::Tests()
 {
 }
 
+Tests::~Tests()
+{
+}
+
 void Tests::doTests(int B, int M)
 {
-    cout << B + M;
+    cout << "entrou";
 }

@@ -1,28 +1,31 @@
 #ifndef BUCKET_H_INCLUDED
 #define BUCKET_H_INCLUDED
 #include <iostream>
-
+#include <vector>
 using namespace std;
 
 class Bucket
 {
 private:
-    int position;
-    int depth;
-    int size;
-    string *vector;
+    int localDepth;
+    int usedSize;
+    int mSize;
+    vector<string> pseudoKeys;
 
 public:
-    Bucket(int M, int depth);
+    Bucket(int M);
     ~Bucket();
 
-    string getBucket();
-    void setBucket();
-    int getDepth(int n);
-    void setDepth(int n);
+    int getUsedSize();
+    void setUsedSize();
+    int getLocalDepth();
+    void incrementLocalDepth();
+    int getSize();
     bool Full();
-    void Insert(string pseudoKey);
-    void Remove();
+    void Remove(int n);
+    void clearBucket();
+    bool Insert(string pseudoKey);
+    string getPseudoKey(int n);
 };
 
 #endif
