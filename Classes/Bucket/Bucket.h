@@ -10,6 +10,7 @@ private:
     int localDepth;
     int usedSize;
     int mSize;
+    int position;
     vector<string> pseudoKeys;
 
 public:
@@ -26,6 +27,7 @@ public:
     bool Insert(string pseudoKey);
     string getPseudoKey(int n);
     void setPseudoKey(string key);
+    int Search(string key);
 };
 
 #endif

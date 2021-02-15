@@ -4,8 +4,14 @@
 #include "../Bucket/Bucket.h"
 #include "../Bucket/Bucket.cpp"
 #include <iostream>
+#include <string>
+#include <random>
 
 using namespace std;
+
+random_device rd;
+mt19937 gen(rd());
+
 Tests::Tests()
 {
 }
@@ -16,36 +22,63 @@ Tests::~Tests()
 
 string Tests::randomKeys(int B)
 {
-    int bits;
-    string pseudoKey = "";
-    for (int i = 0; i < B; i++)
-    {
-        bits = rand() % 100;
-        bits = bits % 2;
-        pseudoKey.append(to_string(bits));
-    }
-    return pseudoKey;
+    uniform_int_distribution<> int1(0, 1);
+    string s;
+    s.resize(B);
+    for (size_t i = 0; i < B; i++)
+        s.insert(i, to_string(int1(gen)));
+
+    return s;
 }
 
-void Tests::doTests(int B, int M, int N)
+void Tests::testsActivity(int B, int M, int N)
 {
     int notInserted = 0;
-    Directory *direct = new Directory(M, B);
+    Directory *directA = new Directory(M, B);
+    Directory *directB = new Directory(M, B);
+    string pseudoKey = "";
 
-    cout << "Diretório criado" << endl;
-    cout << "Teste 1" << endl;
-    for (int i = 0; i < 20; i++)
+    cout << "\nResultado para N pseudo-chaves aleatórias" << endl;
+    for (int i = 0; i < N; i++)
     {
-        string str = randomKeys(B);
-        cout << str << endl;
-        notInserted = direct->intHash(B, str);
-        cout << notInserted << endl;
+        pseudoKey = "";
+        pseudoKey = randomKeys(B);
+        if (directA->Search(pseudoKey))
+        {
+            i--;
+        }
+        else
+        {
+            directA->Insert(pseudoKey);
+        }
+        cout << "O valor da pseudokey e: " << pseudoKey << endl;
     }
-    cout << "Teste 2" << endl;
-    for (int i = 0; i < 20; i++)
+
+    cout << "\n------------------ RESULTADOS ------------------" << endl;
+
+    directA->getResults();
+
+    cout << "------------------------------------------------" << endl;
+
+    cout << "\nResultado para N pseudo-chaves iniciadas com um mesmo padrão de bits" << endl;
+    for (int j = 0; j < N; j++)
     {
-        string str = "0";
-        str = str + randomKeys(B - 1);
-        cout << str << endl;
+        pseudoKey = "";
+        pseudoKey = "10";
+        pseudoKey += randomKeys(B - 2);
+        if (directB->Search(pseudoKey))
+        {
+            j--;
+        }
+        else
+        {
+            directB->Insert(pseudoKey);
+        }
+        cout << "O valor da pseudokey e: " << pseudoKey << endl;
     }
+    cout << "\n------------------ RESULTADOS ------------------" << endl;
+
+    directB->getResults();
+
+    cout << "------------------------------------------------" << endl;
 }

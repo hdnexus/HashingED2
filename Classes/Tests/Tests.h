@@ -10,9 +10,7 @@ private:
 public:
     Tests();
     ~Tests();
-    void doTests(int B, int M, int N);
-    void firstTest();
-    void secondTest();
+    void testsActivity(int B, int M, int N);
     string randomKeys(int B);
     void printStatistics();
 };

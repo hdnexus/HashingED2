@@ -1,4 +1,4 @@
-<h1 align="center">Atividade Estrutura de Dados 2 - Hashing Extensivel</h1>
+Atividade Estrutura de Dados 2 - Hashing Extensivel
 
 Atividade para a disciplina de estrutura de dados 2
 

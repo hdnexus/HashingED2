@@ -9,6 +9,7 @@ Bucket::Bucket(int M)
 {
   this->mSize = M;
   this->localDepth = 0;
+  this->position = 0;
   this->usedSize = 0;
 }
 
@@ -36,7 +37,7 @@ bool Bucket::Insert(string pseudoKey)
   if (!Full())
   {
     this->pseudoKeys.push_back(pseudoKey);
-    this->usedSize++;
+    this->position++;
     return true;
   }
   else
@@ -47,7 +48,7 @@ bool Bucket::Insert(string pseudoKey)
 
 bool Bucket::Full()
 {
-  if (this->usedSize == this->mSize)
+  if (this->position == this->mSize)
   {
     return 1;
   }
@@ -86,4 +87,19 @@ string Bucket::getPseudoKey(int n)
 void Bucket::setPseudoKey(string n)
 {
   this->pseudoKeys.push_back(n);
+}
+
+int Bucket::Search(string key)
+{
+  int index = 0;
+  for (string currentValue : this->pseudoKeys)
+  {
+    if (key == currentValue)
+    {
+      return index;
+    }
+    index++;
+  }
+
+  return -1;
 }

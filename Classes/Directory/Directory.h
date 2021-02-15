@@ -25,10 +25,11 @@ public:
     void bucketDivider(string key);
     void duplicateDirectory();
     void Insert(string key);
-    int intHash(int number, string key);
+    int intHash(string key);
     string binaryHash(int n);
     bool Search(string i);
     void Remove();
+    void getResults();
 };
 
 #endif

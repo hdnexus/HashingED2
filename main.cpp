@@ -4,8 +4,12 @@
 
 using namespace std;
 
-void menuAtividade(int M, int B, int N)
+int main()
 {
+    int M;
+    int B;
+    int N;
+    Tests test;
     cout << "" << endl;
     cout << "Atividade de Hashing ED2" << endl;
     cout << "Gabriel Martins" << endl;
@@ -20,18 +24,7 @@ void menuAtividade(int M, int B, int N)
     cout << "Numeros digitados com sucesso!" << endl;
     cout << "Iniciando testes..." << endl;
 
-    Tests test;
-    test.doTests(B, M, N);
-    cout << "opa";
-}
-
-int main()
-{
-    int M;
-    int B;
-    int N;
-
-    menuAtividade(M, B, N);
+    test.testsActivity(B, M, N);
 
     return 0;
 }
