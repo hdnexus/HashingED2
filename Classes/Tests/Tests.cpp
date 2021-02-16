@@ -74,7 +74,6 @@ void Tests::testsActivity(int B, int M, int N)
         {
             directB->Insert(pseudoKey);
         }
-        cout << "O valor da pseudokey e: " << pseudoKey << endl;
     }
     cout << "\n------------------ RESULTADOS ------------------" << endl;
 
