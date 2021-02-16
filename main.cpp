@@ -6,10 +6,13 @@ using namespace std;
 
 int main()
 {
-    int M;
-    int B;
-    int N;
+    int M; // tamanho dos baldes
+    int B; // número de bits
+    int N; // número de pseudochaves
+
     Tests test;
+
+    //Menu
     cout << "" << endl;
     cout << "Atividade de Hashing ED2" << endl;
     cout << "Gabriel Martins" << endl;
@@ -20,9 +23,9 @@ int main()
     cin >> B;
     cout << "Insira o valor de N: ";
     cin >> N;
-
     cout << "Numeros digitados com sucesso!" << endl;
     cout << "Iniciando testes..." << endl;
+    //Menu
 
     test.testsActivity(B, M, N);
 

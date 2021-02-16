@@ -28,11 +28,6 @@ Directory::~Directory()
     }
 }
 
-Bucket Directory::getBucket(int n)
-{
-    return *this->Buckets[n];
-}
-
 //referência https://www.geeksforgeeks.org/program-binary-decimal-conversion/
 int Directory::intHash(string key)
 {
@@ -74,13 +69,6 @@ string Directory::binaryHash(int n)
 
 void Directory::duplicateDirectory()
 {
-    this->globalDepth++;
-    Buckets.resize(1 << globalDepth, Buckets[0]);
-
-    for (int i = Buckets.size() - 1; i > 0; i--)
-    {
-        Buckets[i] = Buckets[i / 2];
-    }
 }
 
 void Directory::bucketDivider(string key)
@@ -89,21 +77,34 @@ void Directory::bucketDivider(string key)
 
 void Directory::Insert(string key)
 {
+    //Identifica os d bits mais à esquerda da pseudochave
     int index = intHash(key.substr(0, this->globalDepth));
 
+    //Acessa o balde apontado por essa posição no diretório
+    //Caso o balde não esteja cheio, irá inserir a chave
     if (this->Buckets[index]->Insert(key))
     {
         keysCounter++;
     }
+    //Caso o balde esteja cheio
     else
     {
+        //Se dLocal < dGlobal
         if (this->Buckets[index]->getLocalDepth() < this->globalDepth)
         {
+            //Cria novo balde
+            //Ajusta ponteiros e dLocal
+            //Redistribui as chaves
             bucketDivider(key);
             Insert(key);
         }
+        //Se dLocal = dGlobal
         else if (this->Buckets[index]->getLocalDepth() == this->globalDepth)
         {
+            //Duplica diretório
+            //Cria novo balde
+            //Ajusta ponteiros e dLocal
+            //Redistribui as chaves
             duplicateDirectory();
             Insert(key);
         }
@@ -112,10 +113,13 @@ void Directory::Insert(string key)
 
 bool Directory::Search(string key)
 {
+    //Identifica os d bits mais à esquerda da pseudochave
     int index = intHash(key.substr(0, this->globalDepth));
 
+    //Acessa o balde apontado por essa posição no diretório
     if (this->Buckets[index] != NULL)
     {
+        //Busca a chave no balde
         if (this->Buckets[index]->Search(key) != -1)
         {
             return true;

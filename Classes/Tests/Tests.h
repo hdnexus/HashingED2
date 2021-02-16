@@ -8,11 +8,14 @@ class Tests
 {
 private:
 public:
+    //Construtor dos testes
     Tests();
+    //Destrutor dos testes
     ~Tests();
+    //função que irá realizar os testes
     void testsActivity(int B, int M, int N);
+    //função que irá gerar um binario randomico
     string randomKeys(int B);
-    void printStatistics();
 };
 
 #endif
