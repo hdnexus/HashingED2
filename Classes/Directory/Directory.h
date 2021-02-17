@@ -9,11 +9,13 @@ using namespace std;
 class Directory
 {
 private:
+    //profundidade global
     int globalDepth;
     //número de bits
     int bits;
     //tamanho do balde
     int bucketSize;
+    //quantidade de baldes
     int bucketsCounter;
     //quantidade de chaves
     int keysCounter;

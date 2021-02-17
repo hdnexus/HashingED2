@@ -32,14 +32,14 @@ Directory::~Directory()
 long long int Directory::intHash(string key)
 {
     long long int num = stoull(key); //stoi estava dando erro
-    int dec_value = 0;
+    long long int dec_value = 0;
 
-    int base = 1;
+    long long int base = 1;
 
-    int temp = num;
+    long long int temp = num;
     while (temp)
     {
-        int last_digit = temp % 10;
+        long long int last_digit = temp % 10;
         temp = temp / 10;
 
         dec_value += last_digit * base;
@@ -76,7 +76,6 @@ void Directory::duplicateDirectory()
     }
 
     int newLastPosition = pow(2, this->globalDepth);
-
     for (i = 0; i < newLastPosition; i++)
     {
         Buckets[i] = auxBucket[j / 2];
@@ -108,8 +107,8 @@ void Directory::bucketDivider(string key)
 
     for (int i = 0; i < newKeys.size(); i++)
     {
-        string key = newKeys[i];
-        this->Buckets[index]->Remove(key, this->globalDepth);
+        string getKey = newKeys[i];
+        this->Buckets[index]->Remove(getKey, this->globalDepth);
     }
 
     this->Buckets[index] = addBucket;
@@ -119,9 +118,8 @@ void Directory::Insert(string key)
 {
     long long int index = intHash(key.substr(0, this->globalDepth));
 
-    if (!this->Buckets[index]->Full())
+    if (this->Buckets[index]->Insert(key, this->globalDepth))
     {
-        this->Buckets[index]->Insert(key, this->globalDepth);
         keysCounter++;
     }
     //Caso o balde esteja cheio
@@ -135,6 +133,7 @@ void Directory::Insert(string key)
         }
         else if (this->Buckets[index]->getLocalDepth() == this->globalDepth && this->globalDepth < this->bits)
         {
+
             //duplica diretório
             duplicateDirectory();
             //cria novo balde
@@ -153,7 +152,10 @@ float Directory::memoryOcupation()
 
 void Directory::getResults()
 {
+    //pelo slide do jairo
     float loadFactor = (float)this->keysCounter / (this->bucketsCounter * this->bucketSize);
+
+    cout << "Tamanho dos baldes: " << bucketSize << endl;
 
     cout << "Numero de chaves: " << keysCounter << endl;
 

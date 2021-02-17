@@ -11,7 +11,7 @@ private:
     int localDepth;
     //tamanho que está sendo usado
     int usedSize;
-    //tamanho do balde
+    //tamanho máximo do balde
     int mSize;
     //vetor de pseudochaves
     vector<string> pseudoKeys;

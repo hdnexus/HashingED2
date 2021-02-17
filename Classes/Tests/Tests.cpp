@@ -59,9 +59,16 @@ void Tests::testsActivity(int B, int M, int N)
     startTime = clock();
     for (int j = 0; j < N; j++)
     {
-        pseudoKey = "";
-        pseudoKey = "0";
-        pseudoKey += randomKeys(B - 1);
+        if (B == 1)
+        {
+            pseudoKey = "0";
+        }
+        else
+        {
+            pseudoKey = "";
+            pseudoKey = "01";
+            pseudoKey += randomKeys(B - 2);
+        }
         directB->Insert(pseudoKey);
     }
     finalTime = clock();

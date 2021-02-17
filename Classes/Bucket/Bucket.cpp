@@ -68,7 +68,8 @@ void Bucket::newLocalDepth(string key, int globalDepth)
     numberOfBits = 0;
     for (int j = 0; j < this->getUsedSize(); j++)
     {
-      if (key.substr(0, globalDepth).at(i) == getSpecificBit(j, i))
+      string specificBit = key.substr(0, globalDepth);
+      if (specificBit.at(i) == getSpecificBit(j, i))
       {
         numberOfBits++;
       }
