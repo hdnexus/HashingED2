@@ -10,10 +10,14 @@ class Directory
 {
 private:
     int globalDepth;
+    //número de bits
     int bits;
+    //tamanho do balde
     int bucketSize;
     int bucketsCounter;
+    //quantidade de chaves
     int keysCounter;
+    //vetor de baldes
     vector<Bucket *> Buckets;
 
 public:

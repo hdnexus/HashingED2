@@ -7,10 +7,13 @@ using namespace std;
 class Bucket
 {
 private:
+    //profundidade local
     int localDepth;
+    //tamanho que está sendo usado
     int usedSize;
+    //tamanho do balde
     int mSize;
-    int position;
+    //vetor de pseudochaves
     vector<string> pseudoKeys;
 
 public:

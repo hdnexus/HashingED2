@@ -28,11 +28,6 @@ Directory::~Directory()
     }
 }
 
-Bucket Directory::getBucket(int n)
-{
-    return *this->Buckets[n];
-}
-
 //referência https://www.geeksforgeeks.org/program-binary-decimal-conversion/
 long long int Directory::intHash(string key)
 {
@@ -129,8 +124,10 @@ void Directory::Insert(string key)
         this->Buckets[index]->Insert(key, this->globalDepth);
         keysCounter++;
     }
+    //Caso o balde esteja cheio
     else
     {
+        //Se dLocal < dGlobal
         if (this->Buckets[index]->getLocalDepth() < this->globalDepth)
         {
             //cria novo balde

@@ -10,7 +10,6 @@ Bucket::Bucket(int M)
   this->mSize = M;
   this->localDepth = 0;
   this->usedSize = 0;
-  this->position = 0;
 }
 
 Bucket::~Bucket()
@@ -134,6 +133,7 @@ void Bucket::setPseudoKey(string n)
   this->pseudoKeys.push_back(n);
 }
 
+//Busca a chave no balde
 int Bucket::Search(string key)
 {
   int index = 0;
