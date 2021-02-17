@@ -9,8 +9,8 @@ Bucket::Bucket(int M)
 {
   this->mSize = M;
   this->localDepth = 0;
-  this->position = 0;
   this->usedSize = 0;
+  this->position = 0;
 }
 
 Bucket::~Bucket()
@@ -20,6 +20,11 @@ Bucket::~Bucket()
 int Bucket::getLocalDepth()
 {
   return this->localDepth;
+}
+
+char Bucket::getSpecificBit(int i, int j)
+{
+  return this->pseudoKeys[i].at(j);
 }
 
 int Bucket::getSize()
@@ -32,12 +37,58 @@ void Bucket::incrementLocalDepth()
   this->localDepth = this->localDepth + 1;
 }
 
-bool Bucket::Insert(string pseudoKey)
+void Bucket::Remove(string key, int globalDepth) //
+{
+  if (this->Search(key) != -1)
+  {
+    this->pseudoKeys.erase(this->pseudoKeys.begin() + this->Search(key));
+    this->decreaseUsedSize();
+    int index = 0;
+
+    for (int i = 0; i < pseudoKeys.size(); i++)
+    {
+      string key = getPseudoKey(i);
+      this->pseudoKeys.erase(this->pseudoKeys.begin() + index);
+      this->decreaseUsedSize();
+      newLocalDepth(key, globalDepth);
+      this->pseudoKeys.push_back(key);
+      this->incrementUsedSize();
+      index++;
+    }
+  }
+}
+
+void Bucket::newLocalDepth(string key, int globalDepth)
+{
+
+  int numberOfBits;
+  this->localDepth = 0;
+
+  for (int i = 0; i < globalDepth; i++)
+  {
+    numberOfBits = 0;
+    for (int j = 0; j < this->getUsedSize(); j++)
+    {
+      if (key.substr(0, globalDepth).at(i) == getSpecificBit(j, i))
+      {
+        numberOfBits++;
+      }
+    }
+
+    if (numberOfBits == this->getUsedSize())
+    {
+      this->localDepth++;
+    }
+  }
+}
+
+bool Bucket::Insert(string pseudoKey, int globalDepth)
 {
   if (!Full())
   {
     this->pseudoKeys.push_back(pseudoKey);
-    this->position++;
+    this->newLocalDepth(pseudoKey, globalDepth);
+    this->incrementUsedSize();
     return true;
   }
   else
@@ -48,13 +99,13 @@ bool Bucket::Insert(string pseudoKey)
 
 bool Bucket::Full()
 {
-  if (this->position == this->mSize)
+  if (this->usedSize == this->mSize)
   {
-    return 1;
+    return true;
   }
   else
   {
-    return 0;
+    return false;
   }
 }
 
@@ -63,20 +114,14 @@ int Bucket::getUsedSize()
   return this->usedSize;
 }
 
-void Bucket::setUsedSize()
+void Bucket::incrementUsedSize()
 {
   this->usedSize = this->usedSize + 1;
 }
 
-void Bucket::Remove(int n)
+void Bucket::decreaseUsedSize()
 {
-  this->pseudoKeys.erase(pseudoKeys.begin() + n);
-}
-
-void Bucket::clearBucket()
-{
-  this->pseudoKeys.clear();
-  this->usedSize = 0;
+  this->usedSize = this->usedSize - 1;
 }
 
 string Bucket::getPseudoKey(int n)
@@ -92,14 +137,17 @@ void Bucket::setPseudoKey(string n)
 int Bucket::Search(string key)
 {
   int index = 0;
-  for (string currentValue : this->pseudoKeys)
+  for (int i = 0; i < this->pseudoKeys.size(); i++)
   {
-    if (key == currentValue)
+    string keyB = this->getPseudoKey(i);
+    if (keyB == key)
     {
       return index;
     }
-    index++;
+    else
+    {
+      index++;
+    }
   }
-
   return -1;
 }

@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <random>
+#include <ctime>
 
 using namespace std;
 
@@ -33,52 +34,40 @@ string Tests::randomKeys(int B)
 
 void Tests::testsActivity(int B, int M, int N)
 {
+    clock_t startTime = 0, finalTime;
     int notInserted = 0;
     Directory *directA = new Directory(M, B);
     Directory *directB = new Directory(M, B);
     string pseudoKey = "";
 
-    cout << "\nResultado para N pseudo-chaves aleatórias" << endl;
+    cout << "\nEtapa 01" << endl;
+    startTime = clock();
     for (int i = 0; i < N; i++)
     {
         pseudoKey = "";
         pseudoKey = randomKeys(B);
-        if (directA->Search(pseudoKey))
-        {
-            i--;
-        }
-        else
-        {
-            directA->Insert(pseudoKey);
-        }
-        cout << "O valor da pseudokey e: " << pseudoKey << endl;
+        directA->Insert(pseudoKey);
     }
-
-    cout << "\n------------------ RESULTADOS ------------------" << endl;
+    finalTime = clock();
+    cout << "Resultado para N pseudo-chaves aleatórias" << endl;
 
     directA->getResults();
+    cout << "Tempo gasto: " << (finalTime - startTime) / ((float)CLOCKS_PER_SEC) << endl;
+    cout << "" << endl;
 
-    cout << "------------------------------------------------" << endl;
-
-    cout << "\nResultado para N pseudo-chaves iniciadas com um mesmo padrão de bits" << endl;
+    cout << "\nEtapa 02" << endl;
+    startTime = clock();
     for (int j = 0; j < N; j++)
     {
         pseudoKey = "";
-        pseudoKey = "10";
-        pseudoKey += randomKeys(B - 2);
-        if (directB->Search(pseudoKey))
-        {
-            j--;
-        }
-        else
-        {
-            directB->Insert(pseudoKey);
-        }
-        cout << "O valor da pseudokey e: " << pseudoKey << endl;
+        pseudoKey = "0";
+        pseudoKey += randomKeys(B - 1);
+        directB->Insert(pseudoKey);
     }
-    cout << "\n------------------ RESULTADOS ------------------" << endl;
+    finalTime = clock();
+    cout << "Resultado para N pseudo-chaves iniciadas com um mesmo padrão de bits" << endl;
 
     directB->getResults();
-
-    cout << "------------------------------------------------" << endl;
+    cout << "Tempo gasto: " << (finalTime - startTime) / ((float)CLOCKS_PER_SEC) << endl;
+    cout << "" << endl;
 }

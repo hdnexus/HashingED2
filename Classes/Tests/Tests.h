@@ -8,11 +8,11 @@ class Tests
 {
 private:
 public:
-    Tests();
-    ~Tests();
-    void testsActivity(int B, int M, int N);
-    string randomKeys(int B);
-    void printStatistics();
+    Tests();                                 //OK
+    ~Tests();                                //OK
+    void testsActivity(int B, int M, int N); //OK
+    string randomKeys(int B);                //OK
+    void printStatistics();                  //OK
 };
 
 #endif

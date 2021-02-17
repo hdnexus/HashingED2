@@ -14,20 +14,22 @@ private:
     vector<string> pseudoKeys;
 
 public:
-    Bucket(int M);
-    ~Bucket();
-    int getUsedSize();
-    void setUsedSize();
-    int getLocalDepth();
-    void incrementLocalDepth();
-    int getSize();
-    bool Full();
-    void Remove(int n);
-    void clearBucket();
-    bool Insert(string pseudoKey);
-    string getPseudoKey(int n);
-    void setPseudoKey(string key);
-    int Search(string key);
+    Bucket(int M);                                     //OK
+    ~Bucket();                                         //OK
+    int getUsedSize();                                 //OK
+    void incrementUsedSize();                          //OK
+    int getLocalDepth();                               //OK
+    void incrementLocalDepth();                        //OK
+    void decreaseUsedSize();                           //OK
+    int getSize();                                     //OK
+    bool Full();                                       //OK
+    bool Insert(string pseudoKey, int globalDepth);    //OK
+    void newLocalDepth(string value, int globalDepth); //OK
+    string getPseudoKey(int n);                        //OK
+    void setPseudoKey(string key);                     //OK
+    int Search(string key);                            //OK
+    void Remove(string key, int globalDepth);
+    char getSpecificBit(int i, int j); //OK
 };
 
 #endif

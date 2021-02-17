@@ -9,7 +9,7 @@ Directory::Directory(int M, int B)
 {
     this->bucketSize = M;
     this->bits = B;
-    this->globalDepth = 2;
+    this->globalDepth = 1;
     this->keysCounter = 0;
     Bucket *initialBucket = new Bucket(bucketSize);
 
@@ -34,9 +34,9 @@ Bucket Directory::getBucket(int n)
 }
 
 //referência https://www.geeksforgeeks.org/program-binary-decimal-conversion/
-int Directory::intHash(string key)
+long long int Directory::intHash(string key)
 {
-    int num = stoi(key);
+    long long int num = stoull(key); //stoi estava dando erro
     int dec_value = 0;
 
     int base = 1;
@@ -54,82 +54,117 @@ int Directory::intHash(string key)
     return dec_value;
 }
 
-string Directory::binaryHash(int n)
+bool Directory::Search(string key)
 {
-    string hashBinary;
-    for (int i = this->bits; i >= 0; i--)
+    long long int index = intHash(key.substr(0, this->globalDepth));
+
+    if (this->Buckets[index] != NULL && this->Buckets[index]->Search(key) != -1)
     {
-        int j = n / 2;
-        if (j % 2)
-        {
-            hashBinary.push_back('1');
-        }
-        else
-        {
-            hashBinary.push_back('0');
-        }
+        return true;
     }
-    return hashBinary;
+    else
+    {
+        return false;
+    }
 }
 
 void Directory::duplicateDirectory()
 {
+    vector<Bucket *> auxBucket = this->Buckets;
+    int i = 0, j = 0;
+    int lastPosition = pow(2, this->globalDepth);
     this->globalDepth++;
-    Buckets.resize(1 << globalDepth, Buckets[0]);
 
-    for (int i = Buckets.size() - 1; i > 0; i--)
+    for (i = lastPosition; i < pow(2, this->globalDepth); i++)
     {
-        Buckets[i] = Buckets[i / 2];
+        this->Buckets.push_back(nullptr);
+    }
+
+    int newLastPosition = pow(2, this->globalDepth);
+
+    for (i = 0; i < newLastPosition; i++)
+    {
+        Buckets[i] = auxBucket[j / 2];
+        j++;
     }
 }
 
 void Directory::bucketDivider(string key)
 {
+    long long int index = intHash(key.substr(0, this->globalDepth));
+    Bucket *addBucket = new Bucket(this->bucketSize);
+    this->bucketsCounter++;
+
+    addBucket->Insert(key, this->globalDepth);
+    this->keysCounter++;
+
+    vector<string> newKeys;
+    newKeys.reserve(this->bucketSize);
+
+    for (int i = 0; i < this->Buckets[index]->getUsedSize(); i++)
+    {
+        string compareKey = this->Buckets[index]->getPseudoKey(i);
+        if (compareKey.substr(0, this->globalDepth) == key.substr(0, this->globalDepth))
+        {
+            addBucket->Insert(this->Buckets[index]->getPseudoKey(i), this->globalDepth);
+            newKeys.push_back(this->Buckets[index]->getPseudoKey(i));
+        }
+    }
+
+    for (int i = 0; i < newKeys.size(); i++)
+    {
+        string key = newKeys[i];
+        this->Buckets[index]->Remove(key, this->globalDepth);
+    }
+
+    this->Buckets[index] = addBucket;
 }
 
 void Directory::Insert(string key)
 {
-    int index = intHash(key.substr(0, this->globalDepth));
+    long long int index = intHash(key.substr(0, this->globalDepth));
 
-    if (this->Buckets[index]->Insert(key))
+    if (!this->Buckets[index]->Full())
     {
+        this->Buckets[index]->Insert(key, this->globalDepth);
         keysCounter++;
     }
     else
     {
         if (this->Buckets[index]->getLocalDepth() < this->globalDepth)
         {
+            //cria novo balde
             bucketDivider(key);
-            Insert(key);
         }
-        else if (this->Buckets[index]->getLocalDepth() == this->globalDepth)
+        else if (this->Buckets[index]->getLocalDepth() == this->globalDepth && this->globalDepth < this->bits)
         {
+            //duplica diretório
             duplicateDirectory();
-            Insert(key);
+            //cria novo balde
+            bucketDivider(key);
         }
     }
 }
 
-bool Directory::Search(string key)
+//referência http://www.cplusplus.com/forum/general/129163/
+float Directory::memoryOcupation()
 {
-    int index = intHash(key.substr(0, this->globalDepth));
-
-    if (this->Buckets[index] != NULL)
-    {
-        if (this->Buckets[index]->Search(key) != -1)
-        {
-            return true;
-        }
-    }
-
-    return false;
+    float memory = 0;
+    memory = sizeof(Bucket) * this->bucketsCounter;
+    return memory;
 }
 
 void Directory::getResults()
 {
     float loadFactor = (float)this->keysCounter / (this->bucketsCounter * this->bucketSize);
-    cout << "Número de baldes: " << bucketsCounter << endl;
-    cout << "Número de chaves: " << keysCounter << endl;
+
+    cout << "Numero de chaves: " << keysCounter << endl;
+
+    cout << "Numero de baldes: " << bucketsCounter << endl;
+
     cout << "Fator de carga: " << loadFactor << endl;
-    cout << "Gasto de Memória: " << endl;
+
+    cout << "Tamanho do diretorio: " << pow(2, this->globalDepth) << endl;
+
+    cout << "Uso de memoria: " << memoryOcupation() << " Bytes" << endl;
 }

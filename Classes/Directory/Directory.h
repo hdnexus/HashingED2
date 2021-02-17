@@ -9,27 +9,25 @@ using namespace std;
 class Directory
 {
 private:
-    int nKeys;
     int globalDepth;
     int bits;
     int bucketSize;
-    int nBuckets;
     int bucketsCounter;
     int keysCounter;
     vector<Bucket *> Buckets;
 
 public:
-    Directory(int M, int B);
-    ~Directory();
-    Bucket getBucket(int n);
-    void bucketDivider(string key);
-    void duplicateDirectory();
-    void Insert(string key);
-    int intHash(string key);
-    string binaryHash(int n);
-    bool Search(string i);
-    void Remove();
-    void getResults();
+    Directory(int M, int B);           //OK
+    ~Directory();                      //OK
+    Bucket getBucket(int n);           //OK
+    void bucketDivider(string key);    //OK
+    void duplicateDirectory();         //OK
+    void Insert(string key);           //OK
+    long long int intHash(string key); //OK
+    bool Search(string i);             //OK
+    void Remove();                     //OK
+    void getResults();                 //OK
+    float memoryOcupation();           //OK
 };
 
 #endif
