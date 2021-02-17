@@ -5,6 +5,7 @@
 
 using namespace std;
 
+//construtor do balde
 Bucket::Bucket(int M)
 {
   this->mSize = M;
@@ -12,30 +13,35 @@ Bucket::Bucket(int M)
   this->usedSize = 0;
 }
 
+//destrutor do balde
 Bucket::~Bucket()
 {
 }
 
+//função para obter a profundidade local
 int Bucket::getLocalDepth()
 {
   return this->localDepth;
 }
 
+//função para obter um bit especifico de uma string
 char Bucket::getSpecificBit(int i, int j)
 {
   return this->pseudoKeys[i].at(j);
 }
 
+//função para obter o tamanho máximo do balde
 int Bucket::getSize()
 {
   return mSize;
 }
-
+//função para incrementar a profundidade local
 void Bucket::incrementLocalDepth()
 {
   this->localDepth = this->localDepth + 1;
 }
 
+//função para remover uma pseudochave e recalcular a profundidade local
 void Bucket::Remove(string key, int globalDepth)
 {
   if (this->Search(key) != -1)
@@ -57,6 +63,7 @@ void Bucket::Remove(string key, int globalDepth)
   }
 }
 
+//função para verificar a profundidade
 void Bucket::newLocalDepth(string key, int globalDepth)
 {
 
@@ -82,6 +89,7 @@ void Bucket::newLocalDepth(string key, int globalDepth)
   }
 }
 
+//função para inserir pseudokey no balde
 bool Bucket::Insert(string pseudoKey, int globalDepth)
 {
   if (!Full())
@@ -97,6 +105,7 @@ bool Bucket::Insert(string pseudoKey, int globalDepth)
   }
 }
 
+//função para checar se o balde está cheio
 bool Bucket::Full()
 {
   if (this->usedSize == this->mSize)
@@ -109,26 +118,31 @@ bool Bucket::Full()
   }
 }
 
+//função para obter o tamanho usado
 int Bucket::getUsedSize()
 {
   return this->usedSize;
 }
 
+//função para incrementar o tamanho usado
 void Bucket::incrementUsedSize()
 {
   this->usedSize = this->usedSize + 1;
 }
 
+//função para decrementar o tamanho usado
 void Bucket::decreaseUsedSize()
 {
   this->usedSize = this->usedSize - 1;
 }
 
+//função para obter uma determinada pseudochave
 string Bucket::getPseudoKey(int n)
 {
   return this->pseudoKeys[n];
 }
 
+//função para inserir uma pseudochave de valor n
 void Bucket::setPseudoKey(string n)
 {
   this->pseudoKeys.push_back(n);

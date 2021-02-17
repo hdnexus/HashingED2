@@ -5,6 +5,7 @@
 
 using namespace std;
 
+//construtor do diretório
 Directory::Directory(int M, int B)
 {
     this->bucketSize = M;
@@ -19,7 +20,7 @@ Directory::Directory(int M, int B)
     }
     this->bucketsCounter = 1;
 }
-
+//destrutor do diretório
 Directory::~Directory()
 {
     for (int i = 0; i < Buckets.size(); i++)
@@ -28,6 +29,7 @@ Directory::~Directory()
     }
 }
 
+//função para transformar string binário pra inteiro
 //referência https://www.geeksforgeeks.org/program-binary-decimal-conversion/
 long long int Directory::intHash(string key)
 {
@@ -49,6 +51,7 @@ long long int Directory::intHash(string key)
     return dec_value;
 }
 
+//função de procura de baldes/chaves
 bool Directory::Search(string key)
 {
     long long int index = intHash(key.substr(0, this->globalDepth));
@@ -63,6 +66,7 @@ bool Directory::Search(string key)
     }
 }
 
+//função para duplicar diretório
 void Directory::duplicateDirectory()
 {
     vector<Bucket *> auxBucket = this->Buckets;
@@ -83,6 +87,7 @@ void Directory::duplicateDirectory()
     }
 }
 
+//função para dividir balde
 void Directory::bucketDivider(string key)
 {
     long long int index = intHash(key.substr(0, this->globalDepth));
@@ -114,6 +119,7 @@ void Directory::bucketDivider(string key)
     this->Buckets[index] = addBucket;
 }
 
+//função para inserir chaves
 void Directory::Insert(string key)
 {
     long long int index = intHash(key.substr(0, this->globalDepth));
@@ -142,6 +148,7 @@ void Directory::Insert(string key)
     }
 }
 
+//função para calcular o uso de memória
 //referência http://www.cplusplus.com/forum/general/129163/
 float Directory::memoryOcupation()
 {
@@ -150,6 +157,7 @@ float Directory::memoryOcupation()
     return memory;
 }
 
+//função para obter e printar os resultados
 void Directory::getResults()
 {
     //pelo slide do jairo

@@ -13,25 +13,29 @@ using namespace std;
 random_device rd;
 mt19937 gen(rd());
 
+//construtor da classe
 Tests::Tests()
 {
 }
 
+//destrutor da classe
 Tests::~Tests()
 {
 }
 
+//função para gerar a string de binário com bits aleatórios
+//referência https://stackoverflow.com/questions/25357892/create-random-binary-string-how-to-remove-null-character-0-from-to-string
 string Tests::randomKeys(int B)
 {
     uniform_int_distribution<> int1(0, 1);
     string s;
-    s.resize(B);
+    s.reserve(B);
     for (size_t i = 0; i < B; i++)
-        s.insert(i, to_string(int1(gen)));
-
+        s.push_back(int1(gen) ? '1' : '0');
     return s;
 }
 
+//função que irá fazer os testes
 void Tests::testsActivity(int B, int M, int N)
 {
     clock_t startTime = 0, finalTime;
@@ -59,16 +63,10 @@ void Tests::testsActivity(int B, int M, int N)
     startTime = clock();
     for (int j = 0; j < N; j++)
     {
-        if (B == 1)
-        {
-            pseudoKey = "0";
-        }
-        else
-        {
-            pseudoKey = "";
-            pseudoKey = "01";
-            pseudoKey += randomKeys(B - 2);
-        }
+        pseudoKey = "";
+        pseudoKey = "0";
+        pseudoKey += randomKeys(B - 1);
+
         directB->Insert(pseudoKey);
     }
     finalTime = clock();
