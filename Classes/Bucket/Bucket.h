@@ -31,8 +31,8 @@ public:
     string getPseudoKey(int n);                        //OK
     void setPseudoKey(string key);                     //OK
     int Search(string key);                            //OK
-    void Remove(string key, int globalDepth);
-    char getSpecificBit(int i, int j); //OK
+    void Remove(string key, int globalDepth);          //OK
+    char getSpecificBit(int i, int j);                 //OK
 };
 
 #endif

@@ -36,7 +36,7 @@ void Bucket::incrementLocalDepth()
   this->localDepth = this->localDepth + 1;
 }
 
-void Bucket::Remove(string key, int globalDepth) //
+void Bucket::Remove(string key, int globalDepth)
 {
   if (this->Search(key) != -1)
   {
@@ -46,11 +46,11 @@ void Bucket::Remove(string key, int globalDepth) //
 
     for (int i = 0; i < pseudoKeys.size(); i++)
     {
-      string key = getPseudoKey(i);
+      string anotherKey = getPseudoKey(i);
       this->pseudoKeys.erase(this->pseudoKeys.begin() + index);
       this->decreaseUsedSize();
-      newLocalDepth(key, globalDepth);
-      this->pseudoKeys.push_back(key);
+      newLocalDepth(anotherKey, globalDepth);
+      this->pseudoKeys.push_back(anotherKey);
       this->incrementUsedSize();
       index++;
     }
